@@ -801,15 +801,151 @@
                     </div>
                 </div>
             </section>
+            <!--comment-->
 
-            <!-- Pre-footer CTA -->
-            <section class="landing-section" style="text-align: center;">
-                <h2 style="font-size: 2rem; color: var(--dark-text); margin-bottom: 16px;">Challenges</h2>
-                <p
-                    style="font-size: 1.1rem; color: ar(--body-text); margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    Schedule a visit at any of our leading clinical institutes or outpatient centers today.</p>
-                <button class="btn btn-primary" style="padding: 16px 36px; font-size: 1.1rem;"
-                    onclick="navigateTo('view-hospitals')">Start Your Booking</button>
+            <!-- Multimedia/Featured Stories Section -->
+            <section class="landing-section" style="text-align: center; background-color: #f8fafc;">
+                <h2 style="font-size: 2rem; color: var(--dark-text); margin-bottom: 32px;">E-LAB Challenges & Media</h2>
+
+                <!-- Custom Style for Video Cards -->
+                <style>
+                    .video-card {
+                        background: var(--white);
+                        border: 1px solid var(--border-color);
+                        border-radius: var(--radius-sm);
+                        overflow: hidden;
+                        text-align: left;
+                        transition: var(--transition);
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                    .video-card:hover {
+                        border-color: var(--primary-blue);
+                        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+                        transform: translateY(-4px);
+                    }
+
+                    .video-wrapper {
+                        position: relative;
+                        padding-bottom: 56.25%;
+                        /* 16:9 ratio */
+                        height: 0;
+                        background: #000;
+                    }
+
+                    .video-wrapper iframe {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        border: none;
+                    }
+
+                    .video-content {
+                        padding: 24px;
+                        flex-grow: 1;
+                    }
+
+                    .video-title {
+                        font-size: 1.25rem;
+                        font-weight: 700;
+                        color: var(--primary-blue);
+                        margin-bottom: 12px;
+                        line-height: 1.4;
+                    }
+
+                    .video-title a {
+                        color: inherit;
+                        text-decoration: none;
+                    }
+
+                    .video-title a:hover {
+                        text-decoration: underline;
+                    }
+                </style>
+
+                <div class="features-grid"
+                    style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); text-align: left; max-width: 1200px; margin: 0 auto; gap: 32px;">
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/u99pzrWw5Kk" title="Get to Know Us"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h3 class="video-title"><a href="https://www.youtube.com/watch?v=u99pzrWw5Kk"
+                                    target="_blank">Get to Know Us</a></h3>
+                            <p>We are a group of students from African Leadership University, united by a mission to
+                                improve healthcare and agriculture in Africa. Our goal is to provide practical solutions
+                                to enhance healthcare access, promote sustainable agriculture, and improve nutrition,
+                                ultimately contributing to the well-being and development of African communities.</p>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/lCdkVdYOJbg" title="The Wodaabe Community"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h3 class="video-title"><a href="https://www.youtube.com/watch?v=lCdkVdYOJbg"
+                                    target="_blank">The Wodaabe Community</a></h3>
+                            <p>In this podcast, Gabriel and the panelists discuss the Wodaabe community in Niger, where
+                                men compete in beauty contests judged by women. Men are expected to have big eyes, white
+                                teeth, and wear makeup. The community values beauty over wealth, and there's a festival
+                                where men perform romantic dances.</p>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/wgR0GHtfxuQ" title="Help Lab"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h3 class="video-title"><a href="https://www.youtube.com/watch?v=wgR0GHtfxuQ"
+                                    target="_blank">Help Lab</a></h3>
+                            <p>The Prodigies team helps clean a community garden, focusing on teamwork, environmental
+                                sanitation, and climate change prevention. They highlight the benefits of reducing waste
+                                and preventing diseases, sharing community feedback and their commitment to helping more
+                                communities.</p>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/1LERwOVy1xg" title="Hunt for Treasure"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h3 class="video-title"><a href="https://www.youtube.com/watch?v=1LERwOVy1xg"
+                                    target="_blank">Hunt for Treasure</a></h3>
+                            <p>Gabriel and Gisa from the Prodigies interview Dr. Israel Makuza, a veterinarian at Shema
+                                Health Clinic. Dr. Makuza discusses his mission to improve animal healthcare in East
+                                Africa, his daily operations, and challenges like lack of awareness. He shares success
+                                stories and plans to expand to Uganda and Kenya, highlighting how studying animal
+                                behavior can inspire tech and entrepreneurial innovation.</p>
+                        </div>
+                    </div>
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <iframe src="https://www.youtube.com/embed/Tt-k-hwZhx4" title="Launch your Mission"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                        <div class="video-content">
+                            <h3 class="video-title"><a href="https://www.youtube.com/watch?v=Tt-k-hwZhx4&t=15s"
+                                    target="_blank">Launch your Mission</a></h3>
+                            <p>The Prodigies pitch a solution to Rwanda's healthcare challenges, focusing on training
+                                community health workers to improve access to maternal health, diagnostics, and hygiene.
+                                They propose a budget for diagnostic kits, education, training, and mobile data. The
+                                team emphasizes that the grant will leverage resources, reduce healthcare costs, and
+                                improve data reporting in rural areas.</p>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- Meet the Team Section -->
@@ -879,7 +1015,7 @@
                         <div class="logo-area" style="margin-bottom: 24px;">
                             <div class="logo-icon" style="background-color: var(--white); color: var(--primary-blue);">
                                 CC</div>
-                            <div class="logo-text" style="color: var(--white);">Prodigies </div>
+                            <div class="logo-text" style="color: var(--white);">Prodigies Healthcare</div>
                         </div>
                         <p style="color: #9CA3AF; font-size: 0.95rem; line-height: 1.6;">Delivering outstanding clinical
                             outcomes and a world-class patient experience through integrated, specialized care.</p>
