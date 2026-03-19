@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Appointments - Clinical Care</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0072CE;
+            --primary-blue-hover: #005A9E;
+            --dark-text: #1C2329;
+            --body-text: #4A4A4A;
+            --white: #FFFFFF;
+            --pale-blue: #F0F5F9;
+            --light-gray: #F5F5F5;
+            --border-color: #E2E8F0;
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+            --transition: all 0.2s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--body-text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary-blue);
+            letter-spacing: -0.5px;
+        }
+
+        .header-contact {
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Main Container */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Views */
+        .view {
+            display: none;
+            width: 100%;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        .view.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Common Containers */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 5%;
+            width: 100%;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3,
+        h4 {
+            color: var(--dark-text);
+            line-height: 1.2;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--body-text);
+            margin-bottom: 32px;
+            max-width: 600px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            text-decoration: none;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-blue-hover);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border-color: var(--primary-blue);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--pale-blue);
+        }
+
+        /* ------ Home View (Hero Split) ------ */
+        .hero-split {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .hero-split {
+                flex-direction: row;
+                min-height: calc(100vh - 70px);
+            }
+        }
+
+        .hero-image {
+            flex: 1;
+            background-color: #E0E7EA;
+            background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            background-position: center;
+            min-height: 300px;
+        }
+
+        .hero-content {
+            flex: 1;
+            background-color: var(--pale-blue);
+            padding: 60px 8%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .hero-content .page-title {
+            font-size: 3rem;
+            color: var(--dark-text);
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        /* ------ Landing Page Additional Sections ------ */
+        .landing-section {
+            padding: 80px 5%;
+            background-color: var(--white);
+        }
+
+        .landing-section.bg-light {
+            background-color: var(--light-gray);
+        }
+
+        .landing-section-title {
+            text-align: center;
+            font-size: 2.25rem;
+            color: var(--dark-text);
+            margin-bottom: 16px;
+        }
+
+        .landing-section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--body-text);
+            margin-bottom: 48px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 40px 32px;
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-blue);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            color: var(--dark-text);
+        }
+
+        .why-choose-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .why-choose-item h3 {
+            color: var(--primary-blue);
+            margin-bottom: 16px;
+            font-size: 1.4rem;
+        }
+
+        /* ------ Footer ------ */
+        .footer {
+            background-color: #0B111A;
+            color: var(--white);
+            padding: 60px 5% 30px;
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--white);
+            margin-bottom: 24px;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+            color: #9CA3AF;
+            cursor: pointer;
+            transition: color 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .footer-col ul li:hover {
+            color: var(--white);
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #374151;
+            color: #9CA3AF;
+            font-size: 0.9rem;
+        }
+
+        /* ------ Flow Navigation (Breadcrumbs/Back) ------ */
+        .flow-header {
+            background-color: var(--light-gray);
+            padding: 16px 5%;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-blue);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            background: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .flow-tracker {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--body-text);
+            font-weight: 500;
+        }
+
+        .flow-tracker span.active-step {
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        /* ------ List Views (Hospitals, Depts, Doctors) ------ */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .grid-layout {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .grid-layout.doctors-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .clinical-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            cursor: pointer;
+            text-align: left;
+            position: relative;
+        }
+
+        .clinical-card:hover {
+            border-color: var(--primary-blue);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            background-color: var(--pale-blue);
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-sm);
+            color: var(--primary-blue);
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 4px;
+            margin-top: 4px;
+        }
+
+        .card-meta {
+            font-size: 0.9rem;
+            color: var(--body-text);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .card-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-gray);
+            font-weight: 600;
+            color: var(--primary-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-footer::after {
+            content: "→";
+            font-size: 1.2rem;
+        }
+
+        /* Doctor specific card adjustments */
+        .doctor-card {
+            text-align: center;
+            align-items: center;
+        }
+
+        .doctor-card .card-header {
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .doctor-card .card-icon {
+            width: 80px;
+            height: 80px;
+            font-size: 2.5rem;
+            border-radius: 50%;
+        }
+
+        .doctor-card .card-title {
+            color: var(--dark-text);
+        }
+
+        .doctor-card .card-meta {
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .specialty-badge {
+            background-color: var(--pale-blue);
+            color: var(--primary-blue);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .doctor-card .card-footer {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .doctor-card .card-footer::after {
+            content: none;
+        }
+
+        .doctor-card .btn {
+            width: 100%;
+            padding: 10px;
+            font-size: 0.95rem;
+        }
+
+        /* ------ Date & Time View Custom Styles ------ */
+        .datetime-container {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        @media (min-width: 768px) {
+            .datetime-container {
+                flex-direction: row;
+            }
+        }
+
+        .date-selector,
+        .time-selector {
+            flex: 1;
+        }
+
+        @media (min-width: 768px) {
+            .date-selector {
+                border-right: 1px solid var(--border-color);
+                padding-right: 32px;
+            }
+        }
+
+        .date-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .date-btn:hover {
+            border-color: var(--primary-blue);
+            background: var(--pale-blue);
+        }
+
+        .date-btn.active {
+            border-color: var(--primary-blue);
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
+        }
+
+        .time-btn {
+            padding: 14px;
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .time-btn:hover {
+            border-color: var(--primary-blue);
+            background: var(--pale-blue);
+            color: var(--primary-blue);
+        }
+
+        /* ------ Confirmation View ------ */
+        .confirmation-box {
+            background-color: var(--white);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--primary-blue);
+            border-radius: var(--radius-sm);
+            padding: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            margin-top: 40px;
+        }
+
+        .conf-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .conf-header h2 {
+            font-size: 2rem;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+        }
+
+        .conf-details {
+            background-color: var(--light-gray);
+            padding: 24px;
+            border-radius: var(--radius-sm);
+            margin-bottom: 32px;
+        }
+
+        .detail-row {
+            display: flex;
+            padding: 12px 0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .detail-label {
+            width: 120px;
+            font-weight: 600;
+            color: var(--body-text);
+        }
+
+        .detail-value {
+            font-weight: 700;
+            color: var(--dark-text);
+            flex: 1;
+        }
+
+        .conf-actions {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Global Header -->
+    <header>
+        <div class="logo-area" onclick="resetApp()">
+            <div class="logo-icon">PH</div>
+            <div class="logo-text">Prodigies Healthcare</div>
+        </div>
+        <div class="header-contact">
+            <span>Call us at: 0785451654</span>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <!-- View 1: Complete Home Landing Page -->
+        <div class="view active" id="view-home">
+            <!-- Hero Split Section -->
+            <div class="hero-split">
+                <div class="hero-image" aria-label="A patient interacting with a doctor in a clinical setting."></div>
+                <div class="hero-content">
+                    <h1 class="page-title">Book an Appointment Today.</h1>
+                    <p>Access world-class healthcare, leading specialists, and advanced treatments across our global
+                        network of clinical institutes.</p>
+                    <div class="button-group">
+                        <button class="btn btn-primary" onclick="navigateTo('view-hospitals')">
+                            Request an Appointment
+                        </button>
+                        <button class="btn btn-secondary" onclick="navigateTo('view-hospitals')">
+                            Find a Hospital
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Institutes Overview Section -->
+            <section class="landing-section">
+                <h2 class="landing-section-title">Comprehensive Care Across Specialties</h2>
+                <p class="landing-section-subtitle">Our world-class clinical institutes integrate highly specialized
+                    care with continuous research, ensuring our patients receive the most advanced and effective
+                    treatments available.</p>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">♥</div>
+                        <h3 class="feature-title">Heart & Vascular</h3>
+                        <p>Top-ranked cardiology and cardiovascular surgery programs delivering unparalleled patient
+                            care and outcomes.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h3 class="feature-title">Neurological Institute</h3>
+                        <p>Advanced diagnosis and multidisciplinary treatment for complex conditions of the brain,
+                            spine, and nervous system.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🦴</div>
+                        <h3 class="feature-title">Orthopaedics</h3>
+                        <p>Innovative joint replacement, spinal surgery, and specialized sports medicine programs to
+                            restore optimal mobility.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚕</div>
+                        <h3 class="feature-title">Digestive Disease</h3>
+                        <p>Comprehensive gastrointestinal care, recognized globally for pioneering advanced endoscopic
+                            procedures.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎗️</div>
+                        <h3 class="feature-title">Cancer Center</h3>
+                        <p>Comprehensive oncology services offering personalized treatment plans and the latest targeted
+                            therapies.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🧸</div>
+                        <h3 class="feature-title">Pediatric Care</h3>
+                        <p>Compassionate, specialized healthcare for infants, children, and adolescents by top
+                            pediatricians.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Why Choose Us Section -->
+            <section class="landing-section bg-light">
+                <h2 class="landing-section-title">Why Choose Prodigies Healthcare?</h2>
+                <p class="landing-section-subtitle">As one of the leading global healthcare systems, we are dedicated to
+                    setting the standard for patient experience, quality, and clinical innovation.</p>
+
+                <div class="why-choose-grid">
+                    <div class="why-choose-item">
+                        <h3>Mission Statement</h3>
+                        <p>To provide affordable, accessible, and reliable healthcare services through a mobile
+                            platform,
+                            empowering communities to connect with medical professionals, receive timely care, and
+                            improve
+                            their overall health and wellbeing.</p>
+                    </div>
+                    <div class="why-choose-item">
+                        <h3>Problem Statement</h3>
+                        <p>Many people, especially in underserved and rural areas, face limited access to healthcare
+                            services due to long distances, high costs, and long waiting times. This leads to delayed
+                            treatment, poor health outcomes, and lack of reliable medical information.</p>
+                    </div>
+                    <div class="why-choose-item">
+                        <h3>Solutions</h3>
+                        <p>Develop a mobile healthcare application that enables users to:
+                            Book appointments with nearby healthcare providers, access telemedicine services (online
+                            consultations),
+                            receive reliable health information and guidance, and get reminders for medication and
+                            follow-ups.
+                            This solution will make healthcare more convenient, faster, and affordable, improving access
+                            and patient outcomes.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pre-footer CTA -->
+            <section class="landing-section" style="text-align: center;">
+                <h2 style="font-size: 2rem; color: var(--dark-text); margin-bottom: 16px;">Challenges</h2>
+                <p
+                    style="font-size: 1.1rem; color: ar(--body-text); margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Schedule a visit at any of our leading clinical institutes or outpatient centers today.</p>
+                <button class="btn btn-primary" style="padding: 16px 36px; font-size: 1.1rem;"
+                    onclick="navigateTo('view-hospitals')">Start Your Booking</button>
+            </section>
+
+            <!-- Meet the Team Section -->
+            <section class="landing-section bg-light">
+                <h2 class="landing-section-title">Meet Our Team</h2>
+                <p class="landing-section-subtitle">This is the team behind the creation of Prodigies Healthcare
+                    Solutions </p>
+                <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                    <div class="clinical-card doctor-card" style="margin: 0;">
+                        <div class="card-header">
+                            <div class="card-icon" style="padding: 0; overflow: hidden;">
+                                <img src="Gahima.jpeg" alt="Gahima Ian Gisa"
+                                    style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <h3 class="card-title" style="margin-top:8px">Gahima Ian Gisa</h3>
+                            <span class="specialty-badge">Head of Think Tank</span>
+                        </div>
+                    </div>
+                    <div class="clinical-card doctor-card" style="margin: 0;">
+                        <div class="card-header">
+                            <div class="card-icon" style="padding: 0; overflow: hidden;">
+                                <img src="gabriel.jpeg" alt="Agaba Gabriel"
+                                    style="width: 100%; height: 100%; object-fit: cover;">
+
+                            </div>
+                            <h3 class="card-title" style="margin-top:8px">Agaba Gabriel</h3>
+                            <span class="specialty-badge">Prototype Designer</span>
+                        </div>
+                    </div>
+                    <div class="clinical-card doctor-card" style="margin: 0;">
+                        <div class="card-header">
+                            <div class="card-icon" style="padding: 0; overflow: hidden;">
+                                <img src="Hubert.jpeg" alt="Ganza Hubert"
+                                    style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <h3 class="card-title" style="margin-top:8px">Ganza Hubert</h3>
+                            <span class="specialty-badge">Social Media Manager</span>
+                        </div>
+                    </div>
+                    <div class="clinical-card doctor-card" style="margin: 0;">
+                        <div class="card-header">
+                            <div class="card-icon" style="padding: 0; overflow: hidden;">
+                                <img src="Honore.jpeg" alt="Honore Hirwa"
+                                    style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <h3 class="card-title" style="margin-top:8px">Honore Hirwa</h3>
+                            <span class="specialty-badge">Head of Communication</span>
+                        </div>
+                    </div>
+                    <div class="clinical-card doctor-card" style="margin: 0;">
+                        <div class="card-header">
+                            <div class="card-icon" style="padding: 0; overflow: hidden;">
+                                <img src="Gary.jpeg" alt="Gary Kerns Karenzi"
+                                    style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <h3 class="card-title" style="margin-top:8px">Gary Kerns Karenzi</h3>
+                            <span class="specialty-badge">Project Coordinator</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Site Footer -->
+            <footer class="footer">
+                <div class="footer-grid">
+                    <div class="footer-col">
+                        <div class="logo-area" style="margin-bottom: 24px;">
+                            <div class="logo-icon" style="background-color: var(--white); color: var(--primary-blue);">
+                                CC</div>
+                            <div class="logo-text" style="color: var(--white);">Prodigies </div>
+                        </div>
+                        <p style="color: #9CA3AF; font-size: 0.95rem; line-height: 1.6;">Delivering outstanding clinical
+                            outcomes and a world-class patient experience through integrated, specialized care.</p>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Patient Resources</h4>
+                        <ul>
+                            <li onclick="navigateTo('view-hospitals')">Find a Consultant</li>
+                            <li onclick="navigateTo('view-hospitals')">Locations & Directions</li>
+                            <li>Patient Portal Login</li>
+                            <li>Billing & Insurance</li>
+                            <li>Contact Us</li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Our Institutes</h4>
+                        <ul>
+                            <li>Heart, Vascular & Thoracic</li>
+                            <li>Neurological Institute</li>
+                            <li>Orthopaedic & Rheumatologic</li>
+                            <li>Digestive Disease Center</li>
+                            <li>Comprehensive Cancer Care</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    &copy; 2026 Clinical Care Hospitals. All rights reserved. This is a demonstration booking
+                    application.
+                </div>
+            </footer>
+        </div>
+
+        <!-- View 2: Hospitals -->
+        <div class="view" id="view-hospitals">
+            <div class="flow-header">
+                <button class="back-link" onclick="goBack()">← Back to Home</button>
+                <div class="flow-tracker">
+                    <span class="active-step">1. Location</span> > <span>2. Department</span> > <span>3.
+                        Consultant</span> > <span>4. Date & Time</span>
+                </div>
+            </div>
+            <div class="container" style="min-height: calc(100vh - 150px);">
+                <h2 class="section-title">Select a Hospital Location</h2>
+                <p class="section-subtitle">Choose the facility closest to you to view specialized departments and
+                    consultants.</p>
+                <div class="grid-layout" id="hospital-list">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- View 3: Departments -->
+        <div class="view" id="view-departments">
+            <div class="flow-header">
+                <button class="back-link" onclick="goBack()">← Back to Locations</button>
+                <div class="flow-tracker">
+                    <span>1. Location</span> > <span class="active-step">2. Department</span> > <span>3.
+                        Consultant</span> > <span>4. Date & Time</span>
+                </div>
+            </div>
+            <div class="container" style="min-height: calc(100vh - 150px);">
+                <h2 class="section-title" id="dept-heading">Select a Department</h2>
+                <p class="section-subtitle">Our institutes are organized to provide specialized, focused care for your
+                    specific needs.</p>
+                <div class="grid-layout" id="department-list">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- View 4: Doctors -->
+        <div class="view" id="view-doctors">
+            <div class="flow-header">
+                <button class="back-link" onclick="goBack()">← Back to Departments</button>
+                <div class="flow-tracker">
+                    <span>1. Location</span> > <span>2. Department</span> > <span class="active-step">3.
+                        Consultant</span> > <span>4. Date & Time</span>
+                </div>
+            </div>
+            <div class="container" style="min-height: calc(100vh - 150px);">
+                <h2 class="section-title" id="doc-heading">Select a Consultant</h2>
+                <p class="section-subtitle">Review our team of specialists and request an appointment time that works
+                    for you.</p>
+                <div class="grid-layout doctors-grid" id="doctor-list">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- View 5: Date & Time -->
+        <div class="view" id="view-datetime">
+            <div class="flow-header">
+                <button class="back-link" onclick="goBack()">← Back to Consultants</button>
+                <div class="flow-tracker">
+                    <span>1. Location</span> > <span>2. Department</span> > <span>3. Consultant</span> > <span
+                        class="active-step">4. Date & Time</span>
+                </div>
+            </div>
+            <div class="container" style="min-height: calc(100vh - 150px);">
+                <h2 class="section-title">Select Date & Time</h2>
+                <p class="section-subtitle">Choose an available appointment slot to see <span id="dt-doc-name"
+                        style="font-weight:600; color:var(--primary-blue);">your selected consultant</span>.</p>
+
+                <div class="datetime-container">
+                    <div class="date-selector" id="date-list">
+                        <!-- Dates populated by JS -->
+                    </div>
+                    <div class="time-selector" id="time-list" style="display: none;">
+                        <h4 style="margin-bottom: 24px; font-size: 1.25rem; font-weight: 700; color: var(--dark-text);">
+                            Available Times for <span id="selected-date-label"></span>
+                        </h4>
+                        <div class="time-grid" id="time-slots">
+                            <!-- Times populated by JS -->
+                            <!--random-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View 6: Confirmation -->
+        <div class="view" id="view-confirmation">
+            <div class="flow-header">
+                <button class="back-link" onclick="resetApp()">← Return to Main Page</button>
+            </div>
+            <div class="container" style="min-height: calc(100vh - 150px);">
+                <div class="confirmation-box">
+                    <div class="conf-header">
+                        <h2>Appointment Request Received</h2>
+                        <p>You will be receiving an email shorty confirming your appointment.</p>
+                    </div>
+                    <div class="conf-details">
+                        <div class="detail-row">
+                            <div class="detail-label">Patient Status</div>
+                            <div class="detail-value">Pending Confirmation</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Location</div>
+                            <div class="detail-value" id="conf-hospital">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Institute</div>
+                            <div class="detail-value" id="conf-department">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Consultant</div>
+                            <div class="detail-value" id="conf-doctor">-</div>
+                        </div>
+                        <div class="detail-row">
+                            <div class="detail-label">Date & Time</div>
+                            <div class="detail-value" id="conf-datetime">-</div>
+                        </div>
+                    </div>
+                    <div class="conf-actions">
+                        <button class="btn btn-primary" onclick="resetApp()">Return to Homepage</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const hospitals = [
+            { id: 'h1', name: 'King Faisal Hospital', desc: 'A premier multi-specialty hospital located in Gasabo, Kigali.', icon: 'H' },
+            { id: 'h2', name: 'CHUK (University Teaching)', desc: 'The largest public hospital and referral center in Rwanda.', icon: 'O' },
+            { id: 'h3', name: 'Rwanda Military Hospital', desc: 'Providing high quality healthcare services in Kanombe.', icon: 'W' },
+            { id: 'h4', name: 'Legacy Clinics & Diagnostics', desc: 'Advanced diagnostic services and specialized outpatient care.', icon: 'N' },
+            { id: 'h5', name: 'Muhima Hospital', desc: 'A prominent hospital known for excellence in maternity and pediatric care.', icon: 'M' },
+            { id: 'h6', name: 'Kibagabaga Hospital', desc: 'A major district hospital serving the Gasabo area with comprehensive care.', icon: 'K' }
+        ];
+
+        const departments = [
+            { id: 'd1', name: 'Heart, Vascular & Thoracic', desc: 'World-class care for complex cardiovascular and respiratory conditions.', icon: '♥' },
+            { id: 'd2', name: 'Neurological Institute', desc: 'Advanced treatments for brain, spine, and nervous system disorders.', icon: '🧠' },
+            { id: 'd3', name: 'Orthopaedic & Rheumatologic', desc: 'Expert surgical and medical care for bones and joints.', icon: '🦴' },
+            { id: 'd4', name: 'Digestive Disease Institute', desc: 'Comprehensive care for gastrointestinal conditions.', icon: '⚕' },
+            { id: 'd5', name: 'Cancer Center', desc: 'Comprehensive oncology and personalized cancer therapies.', icon: '🎗️' },
+            { id: 'd6', name: 'Pediatric Care', desc: 'Specialized healthcare for infants, children, and adolescents.', icon: '🧸' }
+        ];
+
+        const doctors = [
+            { id: 'doc1', name: 'Dr. Sarah Jenkins', specialty: 'Consultant Cardiologist', focus: 'Heart Failure, Echocardiography', img: 'JS' },
+            { id: 'doc2', name: 'Prof. Michael Chen', specialty: 'Consultant Surgeon', focus: 'Coronary Artery Bypass', img: 'MC' },
+            { id: 'doc3', name: 'Dr. Emily Roberts', specialty: 'Consultant Neurologist', focus: 'Multiple Sclerosis, Stroke', img: 'ER' },
+            { id: 'doc4', name: 'Dr. James Wilson', specialty: 'Orthopaedic Surgeon', focus: 'Joint Replacement', img: 'JW' },
+            { id: 'doc5', name: 'Dr. Anna Patel', specialty: 'Consultant Gastroenterologist', focus: 'Endoscopy, IBD', img: 'AP' },
+            { id: 'doc6', name: 'Dr. David Smith', specialty: 'Thoracic Surgeon', focus: 'Lung Cancer, Transplant', img: 'DS' }
+        ];
+
+        // --- State Management ---
+        const state = {
+            history: ['view-home'],
+            selections: {
+                hospital: null,
+                department: null,
+                doctor: null,
+                date: null,
+                time: null
+            }
+        };
+
+        // --- Navigation Logic ---
+        function navigateTo(viewId) {
+            const currentViewId = state.history[state.history.length - 1];
+            document.getElementById(currentViewId).classList.remove('active');
+
+            if (viewId !== currentViewId) {
+                state.history.push(viewId);
+            }
+
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'instant' });
+
+            if (viewId === 'view-hospitals') renderHospitals();
+            if (viewId === 'view-departments') renderDepartments();
+            if (viewId === 'view-doctors') renderDoctors();
+            if (viewId === 'view-datetime') renderDateTime();
+            if (viewId === 'view-confirmation') updateConfirmationBox();
+        }
+
+        function goBack() {
+            if (state.history.length > 1) {
+                const currentViewId = state.history.pop();
+                document.getElementById(currentViewId).classList.remove('active');
+
+                const prevViewId = state.history[state.history.length - 1];
+                document.getElementById(prevViewId).classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'instant' });
+            }
+        }
+
+        function resetApp() {
+            state.history = ['view-home'];
+            state.selections = { hospital: null, department: null, doctor: null, date: null, time: null };
+
+            document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-home').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- Selection Handlers ---
+        function selectHospital(id) {
+            state.selections.hospital = hospitals.find(h => h.id === id);
+            navigateTo('view-departments');
+        }
+
+        function selectDepartment(id) {
+            state.selections.department = departments.find(d => d.id === id);
+            navigateTo('view-doctors');
+        }
+
+        function selectDoctor(id) {
+            state.selections.doctor = doctors.find(d => d.id === id);
+            navigateTo('view-datetime');
+        }
+
+        function selectDate(dateStr, btnElement) {
+            state.selections.date = dateStr;
+
+            // Update UI
+            document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // Show times
+            const timeList = document.getElementById('time-list');
+            timeList.style.display = 'block';
+            document.getElementById('selected-date-label').textContent = dateStr;
+
+            const timeSlots = document.getElementById('time-slots');
+            timeSlots.innerHTML = '';
+
+            const times = ['09:00 AM', '09:30 AM', '10:00 AM', '11:00 AM', '11:30 AM', '01:00 PM', '02:00 PM', '02:30 PM', '03:30 PM', '04:00 PM'];
+
+            times.forEach(t => {
+                const tBtn = document.createElement('div');
+                tBtn.className = 'time-btn';
+                tBtn.textContent = t;
+                tBtn.onclick = () => selectTime(t);
+                timeSlots.appendChild(tBtn);
+            });
+        }
+
+        function selectTime(timeStr) {
+            state.selections.time = timeStr;
+            navigateTo('view-confirmation');
+        }
+
+        // --- Render Functions ---
+        function renderHospitals() {
+            const container = document.getElementById('hospital-list');
+            container.innerHTML = '';
+
+            hospitals.forEach(h => {
+                const card = document.createElement('div');
+                card.className = 'clinical-card';
+                card.onclick = () => selectHospital(h.id);
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-icon">${h.icon}</div>
+                        <div>
+                            <h3 class="card-title">${h.name}</h3>
+                            <div class="card-meta">
+                                <span>Physical Location</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.95rem; color: #4A4A4A;">${h.desc}</p>
+                    <div class="card-footer">Select Location</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderDepartments() {
+            document.getElementById('dept-heading').textContent = `Institutes at ${state.selections.hospital.name}`;
+            const container = document.getElementById('department-list');
+            container.innerHTML = '';
+
+            departments.forEach(d => {
+                const card = document.createElement('div');
+                card.className = 'clinical-card';
+                card.onclick = () => selectDepartment(d.id);
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-icon" style="font-size: 1.5rem;">${d.icon}</div>
+                        <div>
+                            <h3 class="card-title">${d.name}</h3>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.95rem; color: #4A4A4A;">${d.desc}</p>
+                    <div class="card-footer">View Consultants</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderDoctors() {
+            document.getElementById('doc-heading').textContent = `${state.selections.department.name} Consultants`;
+            const container = document.getElementById('doctor-list');
+            container.innerHTML = '';
+
+            doctors.forEach(d => {
+                const card = document.createElement('div');
+                card.className = 'clinical-card doctor-card';
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="card-icon" style="background-color:#E2E8F0; color:#1C2329;">${d.img}</div>
+                        <h3 class="card-title" style="margin-top:8px">${d.name}</h3>
+                        <span class="specialty-badge">${d.specialty}</span>
+                        <div class="card-meta">
+                            <span style="font-size:0.85rem">Special Focus:</span>
+                            <span style="font-weight:600; color:#1C2329">${d.focus}</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" onclick="selectDoctor('${d.id}')">Request Appointment</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderDateTime() {
+            document.getElementById('dt-doc-name').textContent = state.selections.doctor.name;
+            const dateList = document.getElementById('date-list');
+            const timeList = document.getElementById('time-list');
+
+            // Reset state
+            timeList.style.display = 'none';
+            dateList.innerHTML = '';
+
+            // Get next 5 working days
+            const dates = [];
+            let current = new Date();
+            while (dates.length < 5) {
+                current.setDate(current.getDate() + 1);
+                // Skip weekends (0=Sun, 6=Sat)
+                if (current.getDay() !== 0 && current.getDay() !== 6) {
+                    dates.push(new Date(current));
+                }
+            }
+
+            dates.forEach(d => {
+                const dateStr = d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+                const btn = document.createElement('button');
+                btn.className = 'date-btn';
+                btn.innerHTML = `<span>${dateStr}</span> <span style="font-size: 1.2rem;">→</span>`;
+                btn.onclick = () => selectDate(dateStr, btn);
+                dateList.appendChild(btn);
+            });
+        }
+
+        function updateConfirmationBox() {
+            document.getElementById('conf-hospital').textContent = state.selections.hospital.name;
+            document.getElementById('conf-department').textContent = state.selections.department.name;
+            document.getElementById('conf-doctor').textContent = state.selections.doctor.name;
+            document.getElementById('conf-datetime').textContent = `${state.selections.date} at ${state.selections.time}`;
+        }
+    </script>
+</body>
+
+</html>
